@@ -56,9 +56,8 @@ class PostController extends Controller
     {
 
         $validatedData = $request->validated();
-        // $validatedData['pinned'] = $request->has('pinned');
         if ($request->hasFile('coverImage')) {
-            $validatedData['coverImage'] = $request->file('cover_image')->store('cover_images');
+            $validatedData['coverImage'] = $request->file('coverImage')->store('coverImage');
         }
         $post = Auth::user()->posts()->findOrFail($id);
         $post->update($validatedData);
