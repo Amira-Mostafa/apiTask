@@ -13,10 +13,10 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 //public routes 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-
+Route::post('/verify', [AuthController::class, 'verify']);
 //protected routes
 Route::group(['middleware' => ['auth:sanctum']],  function () {
-    Route::post('/verify', [AuthController::class, 'verify']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('/tags', TagController::class);
     Route::apiResource('/posts', PostController::class);

@@ -52,19 +52,26 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostRequest $request, string $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-
         $validatedData = $request->validated();
+        Log::info('validated data1', [$validatedData]);
         if ($request->hasFile('coverImage')) {
             $validatedData['coverImage'] = $request->file('coverImage')->store('coverImage');
         }
-        $post = Auth::user()->posts()->findOrFail($id);
+        Log::info('validated data2', [$validatedData]);
+        // $post = Auth::user()->posts()->findOrFail($id);
+        Log::info('validated data2', [$post]);
         $post->update($validatedData);
-        if ($validatedData['tags']) {
-            $post->tags()->sync([$validatedData['tags']]);
+        if (isset($validatedData['tags'])) {
+            $post->tags()->sync($validatedData['tags']);
         }
         return new PostResource($post);
+
+
+        // if ($validatedData['tags']) {
+        //     $post->tags()->sync([$validatedData['tags']]);
+        // }
     }
 
     /**
